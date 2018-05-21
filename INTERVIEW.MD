@@ -98,24 +98,36 @@ a
 ### 什么是装饰器；如果想在函数之后进行装饰，应该怎么做；
 > - 定义(个人理解)：对某个函数a在不改变其内部代码的前提下，将其作为另外一个函数b的一部分，最终执行的时候执行的是函数b，从而在客观上起到对该函数的一种装饰作用的**函数**，即为装饰器。
 > -  函数之后修饰装饰器：
-> ```
-> def hello(func):
-    def inner_hello():
-        print('hello')
-        func()
-        print('python')
-    return inner_hello
-def test_dec():
-	    print('happy')
+```
+inslist = {}
+def dec_class(A):
+    def inner_dec(*args):
+        if A not in inslist:
+            inslist[A] = A(*args)
+        return inslist[A]
+    return inner_dec 
+&ensp;
+dec_class
+class A(object):
+    ins = None
+	def __init__(self):
+	    self.sum = 0
+ &ensp;
 def main():
-    new_func = hello(test_dec)
-    new_func()
+   i1 = A()
+   i1.sum = 1
+   i2 = A()
+   i2.sum = 2
+   print('id1 addr is ', id(i1))
+   print('id2 addr is ', id(i2))
+&ensp;
 if __name__ == '__main__':
     main()
-> ```
+```
 
 
 ### 手写个使用装饰器实现的单例模式:
+
 >```
 inslist = {}
 def dec_class(A):
